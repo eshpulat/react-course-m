@@ -145,61 +145,70 @@ function getBook(id) {
 
 //Destructuring
 
-const book = getBook(1);
-book;
+// const book = getBook(1);
+// book;
 
-// const title = book.title;
-// const author = book.author;
+// // const title = book.title;
+// // const author = book.author;
 
-const { title, author, pages, publicationDate, genres, hasMovieAdaptation } =
-    book;
-console.log(title, author, genres);
+// const { title, author, pages, publicationDate, genres, hasMovieAdaptation } =
+//     book;
+// console.log(title, author, genres);
 
-// const primeryGender = genres[0];
-// const secondryGender = genres[1];
+// // const primeryGender = genres[0];
+// // const secondryGender = genres[1];
 
-const [primeryGender, secondryGender, ...otherGenres] = genres;
+// const [primeryGender, secondryGender, ...otherGenres] = genres;
 
-console.log(primeryGender, secondryGender, otherGenres);
+// console.log(primeryGender, secondryGender, otherGenres);
 
-const newGenres = ["epic fantasy", ...genres];
-newGenres;
+// const newGenres = ["epic fantasy", ...genres];
+// newGenres;
 
-const updateBook = { ...book, moviePublicationDate: "2001-12-19", pages: 1210 };
-updateBook;
+// const updateBook = { ...book, moviePublicationDate: "2001-12-19", pages: 1210 };
+// updateBook;
 
-const getYear = (str) => publicationDate.split("-")[0];
-console.log(getYear(publicationDate));
+// const getYear = (str) => publicationDate.split("-")[0];
+// console.log(getYear(publicationDate));
 
-const summary = `${title}, a ${pages}-page long book, was written by ${author} and published in ${getYear(
-    publicationDate
-)}. The book has ${hasMovieAdaptation ? "" : "not"} been adapted as a movie`;
-summary;
+// const summary = `${title}, a ${pages}-page long book, was written by ${author} and published in ${getYear(
+//     publicationDate
+// )}. The book has ${hasMovieAdaptation ? "" : "not"} been adapted as a movie`;
+// summary;
 
-const pagesRange = pages > 1000 ? "over a thousend" : "less than 1000";
-pagesRange;
-console.log(`The book has ${pagesRange} pages`);
+// const pagesRange = pages > 1000 ? "over a thousend" : "less than 1000";
+// pagesRange;
+// console.log(`The book has ${pagesRange} pages`);
 
-console.log(true && "some string");
-console.log(false && "some string");
-console.log(hasMovieAdaptation && "This book has a movie");
+// console.log(true && "some string");
+// console.log(false && "some string");
+// console.log(hasMovieAdaptation && "This book has a movie");
 
-console.log("jonas" && "some string");
-console.log(0 && "some string");
+// console.log("jonas" && "some string");
+// console.log(0 && "some string");
 
-console.log(true || "some string");
-console.log(false || "some string");
+// console.log(true || "some string");
+// console.log(false || "some string");
 
-console.log(book.translations.spanish);
-const spanishTranslation = book.translations.spanish || "NOT TRANSLATION";
-spanishTranslation;
+// console.log(book.translations.spanish);
+// const spanishTranslation = book.translations.spanish || "NOT TRANSLATION";
+// spanishTranslation;
 
-console.log(book.reviews.librarything.ratingsCount);
-const countWrong = book.reviews.librarything.ratingsCount || "no data";
-countWrong;
+// console.log(book.reviews.librarything.ratingsCount);
+// const countWrong = book.reviews.librarything.ratingsCount || "no data";
+// countWrong;
 
-const count = book.reviews.librarything.ratingsCount ?? "no data";
-count;
+// const count = book.reviews.librarything.ratingsCount ?? "no data";
+// count;
+
+// function getTotalReviewCount(book) {
+//     const goodreads = book.reviews.goodreads.reviewsCount;
+//     const librarything = book.reviews?.librarything?.reviewsCount ?? 0;
+
+//     return goodreads + librarything;
+// }
+
+// console.log(getTotalReviewCount(book));
 
 function getTotalReviewCount(book) {
     const goodreads = book.reviews.goodreads.reviewsCount;
@@ -208,4 +217,18 @@ function getTotalReviewCount(book) {
     return goodreads + librarything;
 }
 
-console.log(getTotalReviewCount(book));
+const books = getBooks();
+books;
+
+const x = [1, 2, 3, 4, 5].map((el) => el * 2);
+console.log(x);
+
+const titles = books.map((book) => book.title);
+titles;
+
+const essentialData = books.map((book) => ({
+    title: book.title,
+    author: book.author,
+    reviewsCount: getTotalReviewCount(book)
+}));
+essentialData;
