@@ -75,11 +75,18 @@ function Menu() {
             <h2>Our menu</h2>
 
             {numPizzas > 0 ? (
-                <ul className="pizzas">
-                    {pizzaData.map((pizza) => (
-                        <Pizza pizzaOjc={pizza} key={pizza.name} />
-                    ))}
-                </ul>
+                <>
+                    <p>
+                        Autendic Itailan cuisine. 6 creative dishes to choose
+                        from. All from our stone oven, all organic, all
+                        delicious.
+                    </p>
+                    <ul className="pizzas">
+                        {pizzaData.map((pizza) => (
+                            <Pizza pizzaOjc={pizza} key={pizza.name} />
+                        ))}
+                    </ul>
+                </>
             ) : (
                 <p>
                     We're still working on the our menu. Please come back later.
