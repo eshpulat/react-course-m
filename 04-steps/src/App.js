@@ -8,6 +8,7 @@ const messages = [
 
 export default function App() {
     const [step, setStep] = useState(1);
+    const [test, setTest] = useState({ name: "Jonas" });
 
     function handledPrivious() {
         if (step > 1) setStep(step - 1);
@@ -15,6 +16,11 @@ export default function App() {
 
     function handledNext() {
         if (step < 3) setStep(step + 1);
+
+        // BAD PRACTICE
+        //test.name = "Fred"
+
+        setTest({ name: "Fred" });
     }
     return (
         <div className="steps">
@@ -26,6 +32,7 @@ export default function App() {
 
             <p className="message">
                 Step {step} : {messages[step - 1]}
+                {test.name}
             </p>
             <div className="buttons">
                 <button
