@@ -15,14 +15,19 @@ function App() {
     return (
         <div>
             <h1>Todo App</h1>
-            <TodoForm onAddItem={handleAddItem} />
+            <TodoForm onAddItem={handleAddItem} items={items} />
             <TodoList items={items} onDeletItem={handleDeleteItem} />
         </div>
     );
 }
 
-function TodoForm({ onAddItem }) {
+function TodoForm({ onAddItem, items }) {
     const [description, setDescription] = useState("");
+    const [searching, setSearching] = useState("");
+
+    const filterItems = items.filter((item) =>
+        item.description.toLowerCase().includes(searching.toLowerCase())
+    );
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -35,32 +40,57 @@ function TodoForm({ onAddItem }) {
         onAddItem(newItem);
         setDescription("");
     }
+
+    function handleSearching(e) {
+        setSearching(e.target.value);
+    }
+
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                type="text"
-                value={description}
-                placeholder="What is in your mind"
-                onChange={(e) => setDescription(e.target.value)}
-            />
-            <button>Add Todo</button>
-        </form>
+        <>
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    value={description}
+                    placeholder="What is in your mind"
+                    onChange={(e) => setDescription(e.target.value)}
+                />
+                <button>Add Todo</button>
+            </form>
+
+            <div>
+                <input
+                    type="text"
+                    placeholder="search"
+                    value={searching}
+                    onChange={handleSearching}
+                />
+            </div>
+            <ul>
+                {filterItems.map((item) => (
+                    <li>{item.description}</li>
+                ))}
+            </ul>
+        </>
     );
 }
 
 function TodoList({ items, onDeletItem }) {
     return (
         <ul>
-            {items.map((item, index) => (
-                <li key={index}>
-                    <span> {item.description}</span>
-                    <input type="checkbox" />
-                    <button onClick={() => onDeletItem(item.id)}>
-                        &times;
-                    </button>
-                </li>
+            {items.map((item) => (
+                <Item onDeletItem={onDeletItem} item={item} key={item.id} />
             ))}
         </ul>
+    );
+}
+
+function Item({ onDeletItem, item }) {
+    return (
+        <li>
+            <span> {item.description}</span>
+            <input type="checkbox" />
+            <button onClick={() => onDeletItem(item.id)}>&times;</button>
+        </li>
     );
 }
 
