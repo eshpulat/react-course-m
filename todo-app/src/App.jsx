@@ -3,6 +3,8 @@ import "./App.css";
 
 function App() {
     const [items, setItems] = useState([]);
+    const [description, setDescription] = useState("");
+    const [searching, setSearching] = useState("");
 
     function handleAddItem(item) {
         setItems((items) => [...items, item]);
@@ -11,19 +13,6 @@ function App() {
     function handleDeleteItem(id) {
         setItems((items) => items.filter((item) => item.id !== id));
     }
-
-    return (
-        <div>
-            <h1>Todo App</h1>
-            <TodoForm onAddItem={handleAddItem} items={items} />
-            <TodoList items={items} onDeletItem={handleDeleteItem} />
-        </div>
-    );
-}
-
-function TodoForm({ onAddItem, items }) {
-    const [description, setDescription] = useState("");
-    const [searching, setSearching] = useState("");
 
     const filterItems = items.filter((item) =>
         item.description.toLowerCase().includes(searching.toLowerCase())
@@ -37,7 +26,7 @@ function TodoForm({ onAddItem, items }) {
             id: Date.now()
         };
 
-        onAddItem(newItem);
+        handleAddItem(newItem);
         setDescription("");
     }
 
@@ -46,18 +35,19 @@ function TodoForm({ onAddItem, items }) {
     }
 
     return (
-        <>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    value={description}
-                    placeholder="What is in your mind"
-                    onChange={(e) => setDescription(e.target.value)}
-                />
-                <button>Add Todo</button>
-            </form>
-
+        <div>
+            <h1>Todo App</h1>
             <div>
+                <form onSubmit={handleSubmit}>
+                    <input
+                        type="text"
+                        value={description}
+                        placeholder="What is in your mind"
+                        onChange={(e) => setDescription(e.target.value)}
+                    />
+                    <button>Add Todo</button>
+                </form>
+
                 <input
                     type="text"
                     placeholder="search"
@@ -65,32 +55,24 @@ function TodoForm({ onAddItem, items }) {
                     onChange={handleSearching}
                 />
             </div>
+
+            <ul>
+                {items.map((item) => (
+                    <li>
+                        <span> {item.description}</span>
+                        <input type="checkbox" />
+                        <button onClick={() => handleDeleteItem(item.id)}>
+                            &times;
+                        </button>
+                    </li>
+                ))}
+            </ul>
             <ul>
                 {filterItems.map((item) => (
                     <li>{item.description}</li>
                 ))}
             </ul>
-        </>
-    );
-}
-
-function TodoList({ items, onDeletItem }) {
-    return (
-        <ul>
-            {items.map((item) => (
-                <Item onDeletItem={onDeletItem} item={item} key={item.id} />
-            ))}
-        </ul>
-    );
-}
-
-function Item({ onDeletItem, item }) {
-    return (
-        <li>
-            <span> {item.description}</span>
-            <input type="checkbox" />
-            <button onClick={() => onDeletItem(item.id)}>&times;</button>
-        </li>
+        </div>
     );
 }
 
