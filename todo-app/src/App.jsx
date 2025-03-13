@@ -37,17 +37,18 @@ function App() {
     return (
         <div>
             <h1>Todo App</h1>
-            <div>
-                <form onSubmit={handleSubmit}>
-                    <input
-                        type="text"
-                        value={description}
-                        placeholder="What is in your mind"
-                        onChange={(e) => setDescription(e.target.value)}
-                    />
-                    <button>Add Todo</button>
-                </form>
 
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    value={description}
+                    placeholder="What is in your mind"
+                    onChange={(e) => setDescription(e.target.value)}
+                />
+                <button>Add Todo</button>
+                <hr></hr>
+            </form>
+            <div>
                 <input
                     type="text"
                     placeholder="search"
@@ -57,7 +58,7 @@ function App() {
             </div>
 
             <ul>
-                {items.map((item) => (
+                {filterItems.map((item) => (
                     <li>
                         <span> {item.description}</span>
                         <input type="checkbox" />
@@ -65,11 +66,6 @@ function App() {
                             &times;
                         </button>
                     </li>
-                ))}
-            </ul>
-            <ul>
-                {filterItems.map((item) => (
-                    <li>{item.description}</li>
                 ))}
             </ul>
         </div>
